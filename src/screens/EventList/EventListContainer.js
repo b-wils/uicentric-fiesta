@@ -20,8 +20,13 @@ class EventsListContainer extends Component {
 
 	render() {
 		return (
-			<EventListDisplay eventList={this.props.events}/>
+			<EventListDisplay eventList={this.props.events} onDelete={this.deleteEvent.bind(this)}/>
 			)
+	}
+
+	deleteEvent(id) {
+		const { firestore } = this.context.store
+		firestore.delete({collection: 'events', doc:id})
 	}
 }
 
