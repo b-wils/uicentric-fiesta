@@ -9,6 +9,7 @@ function hasErrors(fieldsError) {
 }
 
 class EventForm extends React.Component {
+
   componentDidMount() {
     // To disabled submit button at the beginning.
     this.props.form.validateFields();
@@ -40,6 +41,7 @@ class EventForm extends React.Component {
         >
           {getFieldDecorator('name', {
             rules: [{ required: true, message: 'Please input an event name' }],
+            initialValue: this.props.event ? this.props.event.name : undefined
           })(
             <Input placeholder="Event Name" />
           )}
@@ -50,6 +52,7 @@ class EventForm extends React.Component {
         >
           {getFieldDecorator('location', {
             rules: [{ required: true, message: 'Please add a location' }],
+            initialValue: this.props.event ? this.props.event.location : undefined
           })(
             <Input placeholder="Location" />
           )}

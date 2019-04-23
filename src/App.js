@@ -6,7 +6,8 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import "antd/dist/antd.css";
 
 import EventListContainer from './screens/EventList/EventListContainer'
-import AddEventContainer from './screens/AddEvent/AddEventContainer'
+import AddEventContainer from './screens/Event/AddEventContainer'
+import EditEventContainer from './screens/Event/EditEventContainer'
 
 const {
   Header, Sider, Content,
@@ -35,6 +36,7 @@ function App() {
             
               <Route path="/" exact component={EventListContainer} />
               <Route path="/addevent" exact component={AddEventContainer} />
+              <Route path="/event/:eventId" exact component={EditEventContainer} />
             
           </Content>
         </Layout>

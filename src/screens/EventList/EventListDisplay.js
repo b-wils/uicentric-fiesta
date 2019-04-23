@@ -1,6 +1,6 @@
 import React from 'react';
-
-import { Table } from 'antd';
+import { Table, Divider } from 'antd';
+import { Link } from "react-router-dom";
 
 const columns =[
 	{
@@ -13,6 +13,17 @@ const columns =[
 		dataIndex: 'location',
 		key: 'location'
 	},
+	{
+	  title: 'Action',
+	  key: 'action',
+	  render: (text, record) => (
+	    <span>
+	      <Link to={`/event/${record.id}`}>Edit</Link>
+	      <Divider type="vertical" />
+	      <a>Delete</a>
+	    </span>
+	  ),
+	}
 ]
 
 const EventListDisplay = ({eventList}) => {
