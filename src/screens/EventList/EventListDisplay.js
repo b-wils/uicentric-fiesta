@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { Table, Divider, Tag } from 'antd';
-
-const { Column, ColumnGroup } = Table;
+import { Table } from 'antd';
 
 const columns =[
 	{
@@ -18,9 +16,6 @@ const columns =[
 ]
 
 const EventListDisplay = ({eventList}) => {
-
-	console.log(eventList)
-
   return (
       <Table dataSource={eventList} columns={columns}>
 
