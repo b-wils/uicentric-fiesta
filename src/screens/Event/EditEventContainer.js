@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { withFirebase } from 'react-redux-firebase'
+import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
 
 import EventForm from './EventForm'
-import {getEventFromId} from '../../redux/eventSelectors'
+import {getEventFromId, eventObjectSelector} from '../../redux/eventSelectors'
 
 class EditEventContainer extends Component {
 
@@ -19,10 +19,12 @@ class EditEventContainer extends Component {
 	}
 
 	render() {
-		if (this.props.event) {
-			return (<EventForm onSubmit={this.updateEvent.bind(this)} event={this.props.event}/>)
-		} else {
+		if (!this.props.isLoaded) {
 			return (<span> Loading... </span>)
+		} else if (isEmpty(this.props.event)) {
+			return (<span> Error: Couldn't find event </span>)
+		} else {
+			return (<EventForm onSubmit={this.updateEvent.bind(this)} event={this.props.event}/>)
 		}		
 	}
 
@@ -35,10 +37,12 @@ class EditEventContainer extends Component {
 const mapStateToProps = (state, ownProps) => {
 
 	var id = ownProps.match.params.eventId;
+	var loaded = isLoaded(eventObjectSelector(state));
 
 	return {
 		eventId: id,
-		event: getEventFromId(state, id),
+		event: loaded ? getEventFromId(state, id) : undefined,
+		isLoaded: loaded
 	};
 }
 

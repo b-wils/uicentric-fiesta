@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { withFirebase } from 'react-redux-firebase'
+import { withFirebase, isLoaded } from 'react-redux-firebase'
 
 import EventListDisplay from './EventListDisplay'
-import {getVisibleEvents} from '../../redux/eventSelectors'
+import {getVisibleEvents, eventObjectSelector} from '../../redux/eventSelectors'
 
 class EventsListContainer extends Component {
 
@@ -19,9 +19,12 @@ class EventsListContainer extends Component {
 	}
 
 	render() {
-		return (
-			<EventListDisplay eventList={this.props.events} onDelete={this.deleteEvent.bind(this)}/>
-			)
+
+		if (!this.props.loaded) {
+			return (<span> Loading... </span>)
+		} else {
+			return (<EventListDisplay eventList={this.props.events} onDelete={this.deleteEvent.bind(this)}/>)
+		}		
 	}
 
 	deleteEvent(id) {
@@ -33,7 +36,8 @@ class EventsListContainer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		events: getVisibleEvents(state)
+		events: getVisibleEvents(state),
+		loaded: isLoaded(eventObjectSelector(state))
 	};
 }
 
