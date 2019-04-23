@@ -1,4 +1,4 @@
-import { createStore, combineReducers, compose } from 'redux'
+import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import { reduxFirestore, firestoreReducer } from 'redux-firestore'
 import firebase from 'firebase/app'
 import 'firebase/auth'
@@ -23,9 +23,17 @@ export default function configureStore(initialState) {
 	// Initialize Cloud Firestore through Firebase
 	firebase.firestore();
 
+
+	const middleware = []
+
+	if (process.env.NODE_ENV !== 'production') {
+		middleware.push(require('redux-immutable-state-invariant').default())
+	}
+
 	// Add reduxFirestore store enhancer to store creator
 	const createStoreWithFirebase = compose(
 	  reduxFirestore(firebase, rfConfig), // firebase instance as first argument, rfConfig as optional second
+	  applyMiddleware(...middleware)
 	)(createStore)
 
 	// Add Firebase to reducers
