@@ -29,16 +29,16 @@ class EventForm extends React.Component {
     } = this.props.form;
 
     // Only show error after a field is touched.
-    const eventNameError = isFieldTouched('eventName') && getFieldError('eventName');
+    const nameError = isFieldTouched('name') && getFieldError('name');
     const locationError = isFieldTouched('location') && getFieldError('location');
 
     return (
       <Form layout="inline" onSubmit={this.handleSubmit}>
         <Form.Item
-          validateStatus={eventNameError ? 'error' : ''}
-          help={eventNameError || ''}
+          validateStatus={nameError ? 'error' : ''}
+          help={nameError || ''}
         >
-          {getFieldDecorator('eventName', {
+          {getFieldDecorator('name', {
             rules: [{ required: true, message: 'Please input an event name' }],
           })(
             <Input placeholder="Event Name" />

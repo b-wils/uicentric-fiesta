@@ -17,7 +17,7 @@ const columns =[
 
 const EventListDisplay = ({eventList}) => {
   return (
-      <Table dataSource={eventList} columns={columns}>
+      <Table dataSource={eventList} columns={columns} rowKey={'id'}>
 
       </Table>
     )
