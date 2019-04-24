@@ -6,23 +6,26 @@ const { Column } = Table;
 
 const EventListDisplay = ({eventList, onDelete}) => {
   return (
-      <Table dataSource={eventList}  rowKey={'id'}>
-      	 <Column
-		      title="Name"
-		      dataIndex="name"
-		      key="name"
-		    />
-      	 <Column
-		      title="Location"
-		      dataIndex="location"
-		      key="location"
-		    />
-      	 <Column
-		      title="Actions"
-		      key="action"
-		      render={(text,record) => <ActionCell event={record} onDelete={onDelete}/>}
-		    />
-      </Table>
+  	  	<div>
+  	  		<h1> Fiesta Events </h1>
+			<Table dataSource={eventList}  rowKey={'id'}>
+				 <Column
+			      title="Name"
+			      dataIndex="name"
+			      key="name"
+			    />
+				 <Column
+			      title="Location"
+			      dataIndex="location"
+			      key="location"
+			    />
+				 <Column
+			      title="Actions"
+			      key="action"
+			      render={(text,record) => <ActionCell event={record} onDelete={onDelete}/>}
+			    />
+			</Table>
+	    </div>
     )
 }
 

@@ -17,11 +17,11 @@ function App() {
   return (
     <Router>
       <Layout>
-        <MyHeader>
-          UICentric Fiesta Events
-        </MyHeader>
+        <Header>
+          <SiteTitle> UICentric Fiesta Event Manager </SiteTitle>
+        </Header>
         <Layout>
-          <Sider>
+          <MySider>
             <Menu theme='dark'>
             
               <Menu.Item>
@@ -31,14 +31,12 @@ function App() {
                 <Link to='/addevent'>Add Event</Link>
               </Menu.Item>
             </Menu>
-          </Sider>
-          <Content>
-            
+          </MySider>
+          <MyContent>
               <Route path="/" exact component={EventListContainer} />
               <Route path="/addevent" exact component={AddEventContainer} />
               <Route path="/event/:eventId" exact component={EditEventContainer} />
-            
-          </Content>
+          </MyContent>
         </Layout>
       </Layout>
     </Router>
@@ -46,8 +44,16 @@ function App() {
   );
 }
 
-const MyHeader = styled(Header) `
+const SiteTitle = styled.h1 `
   color: white;
+`
+
+const MySider = styled(Sider) `
+   height: 100vh; 
+`
+
+const MyContent = styled(Content) `
+  padding: 20px;
 `
 
 export default App;

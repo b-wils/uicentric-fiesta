@@ -16,6 +16,10 @@ class EventsListContainer extends Component {
 	componentDidMount () {
 		const { firestore } = this.context.store
 		firestore.get('events')
+			.catch((msg) => {
+				console.error(msg);
+				alert('Failed to load events')
+			})
 	}
 
 	render() {
@@ -28,8 +32,14 @@ class EventsListContainer extends Component {
 	}
 
 	deleteEvent(id) {
+		// TODO I'm not sure how soon event will be removed from redux
+		// Should we have more UX indicators here?
 		const { firestore } = this.context.store
 		firestore.delete({collection: 'events', doc:id})
+			.catch((msg) => {
+				console.error(msg);
+				alert('Failed to delete event')
+			})
 	}
 }
 

@@ -26,7 +26,7 @@ class EventForm extends React.Component {
 
   render() {
     const {
-      getFieldDecorator, getFieldsError, getFieldError, isFieldTouched,
+      getFieldDecorator, getFieldsError, getFieldError, isFieldTouched
     } = this.props.form;
 
     // Only show error after a field is touched.
@@ -61,7 +61,7 @@ class EventForm extends React.Component {
           <Button
             type="primary"
             htmlType="submit"
-            disabled={hasErrors(getFieldsError())}
+            disabled={ this.props.submitDisabled || hasErrors(getFieldsError())}
           >
             Save
           </Button>
@@ -71,7 +71,12 @@ class EventForm extends React.Component {
   }
 }
 
-const WrappedEventForm = Form.create({ name: 'horizontal_login' })(EventForm);
+const WrappedEventForm = Form.create({name: 'horizontal_login', 
+                                      onValuesChange: (props, values, allFieldsValues ) => {
+                                        const { onValueChange } = props;
+                                        onValueChange();
+                                      }
+                                    })(EventForm);
 
 
 // const WrappedEventForm = Form.create({name: 'event_form'})(EventForm);
