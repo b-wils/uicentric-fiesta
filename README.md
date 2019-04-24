@@ -1,3 +1,5 @@
+Basic CRUD app for managing events. See it in action at https://uicentric-fiesta.firebaseapp.com/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
