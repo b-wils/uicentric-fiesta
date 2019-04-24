@@ -21,6 +21,14 @@ const EventListDisplay = ({eventList, onDelete}) => {
 			      key="location"
 			      sorter={(a,b) => ('' + a.name.toLowerCase()).localeCompare(b.name.toLowerCase()) }
 			    />
+
+				 <Column
+			      title="Price"
+			      dataIndex="price"
+			      key="price"
+			      sorter={(a,b) => (a.price < b.price) }
+			    />
+
 				 <Column
 			      title="Actions"
 			      key="action"

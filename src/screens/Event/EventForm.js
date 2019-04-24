@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  Form, Input, Button
+  Form, Input, Button, InputNumber
 } from 'antd';
 
 function hasErrors(fieldsError) {
@@ -32,9 +32,11 @@ class EventForm extends React.Component {
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name');
     const locationError = isFieldTouched('location') && getFieldError('location');
+    const priceError = isFieldTouched('price') && getFieldError('price');
 
     return (
       <Form layout="inline" onSubmit={this.handleSubmit}>
+
         <Form.Item
           validateStatus={nameError ? 'error' : ''}
           help={nameError || ''}
@@ -46,6 +48,7 @@ class EventForm extends React.Component {
             <Input placeholder="Event Name" />
           )}
         </Form.Item>
+
         <Form.Item
           validateStatus={locationError ? 'error' : ''}
           help={locationError || ''}
@@ -57,6 +60,19 @@ class EventForm extends React.Component {
             <Input placeholder="Location" />
           )}
         </Form.Item>
+
+        <Form.Item
+          validateStatus={priceError ? 'error' : ''}
+          help={priceError || ''}
+        >
+          {getFieldDecorator('price', {
+            rules: [{ type: 'number', message: 'Price must be a number' }],
+            initialValue: this.props.event ? this.props.event.price : undefined
+          })(
+            <InputNumber prefix={<span>$</span>} placeholder="Price" />
+          )}
+        </Form.Item>
+
         <Form.Item>
           <Button
             type="primary"
