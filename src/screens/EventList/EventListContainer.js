@@ -24,6 +24,8 @@ class EventsListContainer extends Component {
 
 	render() {
 
+		// TODO need better loading detection, will get stale results if we go from "edit event" -> "event list"
+
 		if (!this.props.loaded) {
 			return (<span> Loading... </span>)
 		} else {

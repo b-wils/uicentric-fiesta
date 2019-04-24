@@ -13,11 +13,13 @@ const EventListDisplay = ({eventList, onDelete}) => {
 			      title="Name"
 			      dataIndex="name"
 			      key="name"
+			      sorter={(a,b) => ('' + a.name.toLowerCase()).localeCompare(b.name.toLowerCase()) }
 			    />
 				 <Column
 			      title="Location"
 			      dataIndex="location"
 			      key="location"
+			      sorter={(a,b) => ('' + a.name.toLowerCase()).localeCompare(b.name.toLowerCase()) }
 			    />
 				 <Column
 			      title="Actions"
