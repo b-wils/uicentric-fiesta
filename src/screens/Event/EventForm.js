@@ -1,8 +1,11 @@
 import React from 'react';
+import moment from 'moment'
 
 import {
-  Form, Input, Button, InputNumber
+  Form, Input, Button, InputNumber, DatePicker
 } from 'antd';
+
+const DATE_FORMAT = 'MMM Do, YYYY'
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -19,7 +22,14 @@ class EventForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.onSubmit(values);
+
+        var encodedEvent = Object.assign({}, values)
+
+        if (encodedEvent.date) {
+            encodedEvent.date = encodedEvent.date.toDate()
+        }
+
+        this.props.onSubmit(encodedEvent);
       }
     });
   }
@@ -33,6 +43,7 @@ class EventForm extends React.Component {
     const nameError = isFieldTouched('name') && getFieldError('name');
     const locationError = isFieldTouched('location') && getFieldError('location');
     const priceError = isFieldTouched('price') && getFieldError('price');
+    const dateError = isFieldTouched('date') && getFieldError('date');
 
     return (
       <Form layout="inline" onSubmit={this.handleSubmit}>
@@ -43,7 +54,7 @@ class EventForm extends React.Component {
         >
           {getFieldDecorator('name', {
             rules: [{ required: true, message: 'Please input an event name' }],
-            initialValue: this.props.event ? this.props.event.name : undefined
+            initialValue: this.props.event ? this.props.event.name : null
           })(
             <Input placeholder="Event Name" />
           )}
@@ -55,7 +66,7 @@ class EventForm extends React.Component {
         >
           {getFieldDecorator('location', {
             rules: [{ required: true, message: 'Please add a location' }],
-            initialValue: this.props.event ? this.props.event.location : undefined
+            initialValue: this.props.event ? this.props.event.location : null
           })(
             <Input placeholder="Location" />
           )}
@@ -67,9 +78,20 @@ class EventForm extends React.Component {
         >
           {getFieldDecorator('price', {
             rules: [{ type: 'number', message: 'Price must be a number' }],
-            initialValue: this.props.event ? this.props.event.price : undefined
+            initialValue: this.props.event ? this.props.event.price : null
           })(
             <InputNumber prefix={<span>$</span>} placeholder="Price" />
+          )}
+        </Form.Item>
+
+        <Form.Item
+          validateStatus={dateError ? 'error' : ''}
+          help={dateError || ''}
+        >
+          {getFieldDecorator('date', {
+            initialValue: this.props.event && this.props.event.date ? moment(this.props.event.date.toDate()) : null
+          })(
+            <DatePicker format={DATE_FORMAT}/>
           )}
         </Form.Item>
 
@@ -93,8 +115,5 @@ const WrappedEventForm = Form.create({name: 'horizontal_login',
                                         onValueChange();
                                       }
                                     })(EventForm);
-
-
-// const WrappedEventForm = Form.create({name: 'event_form'})(EventForm);
 
 export default WrappedEventForm;
